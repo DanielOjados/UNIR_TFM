@@ -27,8 +27,8 @@ bucephalus/
 ├── pipelines/                                     # Scripts Python del pipeline canónico
 │   ├── 00_audit_and_clean.py                      # Limpieza y auditoría de CSVs raw
 │   ├── 01_validate_relations.py                   # Validación de claves foráneas
-│   ├── 02b_build_canonical_master.py              # Construcción del master canónico
-│   └── 04b_feature_engineering_canonical.py       # Feature engineering + meteorología
+│   ├── 02_build_master_dataset.py                 # Construcción del master canónico
+│   └── 04_feature_engineering.py                  # Feature engineering + meteorología
 │
 ├── data/
 │   ├── raw/                                       # Ficheros fuente (no incluidos)
@@ -104,11 +104,11 @@ PASO 1 — pipelines/00_audit_and_clean.py
 PASO 2 — pipelines/01_validate_relations.py
          Validación de integridad referencial entre tablas.
 
-PASO 3 — pipelines/02b_build_canonical_master.py
+PASO 3 — pipelines/02_build_master_dataset.py
          Construcción del master canónico (sin carreras sintéticas).
          Resultado: tabla estrella con clave (carrera_id, caballo_id).
 
-PASO 4 — pipelines/04b_feature_engineering_canonical.py
+PASO 4 — pipelines/04_feature_engineering.py
          Feature engineering completo + variables delta + meteorología.
          Resultado: master_v5_final.parquet (215 columnas).
 ```
@@ -165,7 +165,7 @@ master_v5_final.parquet
 
 ---
 
-### `01_eda_calidad_fiabilidad_final2605.ipynb` — EDA, Auditoría y Preprocesamiento
+### `01_eda_calidad_fiabilidad.ipynb` — EDA, Auditoría y Preprocesamiento
 
 Este cuaderno valida estadísticamente el dataset generado en el paso anterior y produce los artefactos de preprocesamiento que consume el notebook de modelado.
 
