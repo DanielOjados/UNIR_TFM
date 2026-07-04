@@ -1,14 +1,14 @@
-# Bucephalus — Predicción de Resultados en Carreras de Caballos
+# TFM UNIR — Predicción de Resultados en Carreras de Caballos
 
 **TFM — Máster en Ingeniería de Inteligencia Artificial · UNIR**  
 **Autor:** Daniel Ojados  
-**Datos:** Equijar (Real Sociedad Hípica Española) · circuito español · hasta abril de 2025  
+**Datos:** Real Sociedad Hípica Española · circuito español · hasta abril de 2025  
 
 ---
 
 ## Descripción del Proyecto
 
-Bucephalus es el código del Trabajo de Fin de Máster en Ingeniería de Inteligencia Artificial. El objetivo es predecir qué caballos terminarán en el **podio (top-3)** de una carrera del circuito español, formulando el problema como **ranking tabular** (*Learning-to-Rank*).
+A continuación el código del Trabajo de Fin de Máster en Ingeniería de Inteligencia Artificial. El objetivo es predecir qué caballos terminarán en el **podio (top-3)** de una carrera del circuito español, formulando el problema como **ranking tabular** (*Learning-to-Rank*).
 
 El proyecto compara técnicas clásicas de *boosting* (XGBoost, LightGBM, CatBoost) con arquitecturas tabulares profundas más recientes (TabM, TabTransformer), además de rankers directos (LGBMRanker, XGBRanker) y baselines de referencia. La evaluación se basa en métricas de ranking orientadas a lista (NDCG@3, MAP@3) calculadas sobre un conjunto de test cronológicamente posterior al entrenamiento.
 
@@ -20,8 +20,8 @@ El proyecto compara técnicas clásicas de *boosting* (XGBoost, LightGBM, CatBoo
 bucephalus/
 │
 ├── notebooks/
-│   ├── 00_pipeline_fuentes_gcp_final2605.ipynb   # Pipeline de datos y feature store
-│   ├── 01_eda_calidad_fiabilidad_final2605.ipynb  # EDA, auditoría y preprocesamiento
+│   ├── 00_pipeline_fuentes.ipynb                  # Pipeline de datos y feature store
+│   ├── 01_eda_calidad_fiabilidad.ipynb            # EDA, auditoría y preprocesamiento
 │   └── 02_modelado_cientifico.ipynb               # Modelado, evaluación e interpretabilidad
 │
 ├── pipelines/                                     # Scripts Python del pipeline canónico
@@ -31,9 +31,9 @@ bucephalus/
 │   └── 04b_feature_engineering_canonical.py       # Feature engineering + meteorología
 │
 ├── data/
-│   ├── raw/                                       # Ficheros fuente de Equijar (no incluidos)
+│   ├── raw/                                       # Ficheros fuente (no incluidos)
 │   └── processed/
-│       └── master_v5_final.parquet                # Dataset final (no incluido, ver GCP)
+│       └── master_v5_final.parquet                # Dataset final (no incluido)
 │
 ├── models/                                        # Artefactos de preprocesamiento y modelos
 │   ├── imputer.pkl
@@ -52,7 +52,7 @@ bucephalus/
 El pipeline se ejecuta en tres pasos secuenciales. Cada notebook toma como entrada los artefactos del anterior.
 
 ```
-Fuentes raw (Equijar + Open-Meteo)
+Fuentes raw (Real Sociedad Hípica Española + Open-Meteo)
         │
         ▼
 [00] Pipeline de datos
@@ -71,13 +71,13 @@ Resultados: LightGBM_HPO  →  NDCG@3 = 0,6055 (test)
 
 ## Notebooks
 
-### `00_pipeline_fuentes_gcp_final2605.ipynb` — Pipeline de Datos y Feature Store
+### `00_pipeline_fuentes.ipynb` — Pipeline de Datos y Feature Store
 
 Este notebook transforma las nueve fuentes de datos heterogéneas en un único dataset tabular listo para el modelado. La unidad de análisis es **una fila por participante en una carrera real**.
 
 #### Fuentes de datos
 
-Los datos proceden de Equijar (portal oficial de la Real Sociedad Hípica Española), extraídos mediante scraping hasta el 29 de marzo de 2025. Las fuentes se leen desde Google Cloud Storage o, en su defecto, desde disco local.
+Los datos proceden del portal oficial de la Real Sociedad Hípica Española, extraídos mediante scraping hasta el 29 de marzo de 2025. Las fuentes se leen desde Google Cloud Storage o, en su defecto, desde disco local.
 
 | Fichero fuente | Entidad | Clave principal | Relación |
 |---|---|---|---|
@@ -322,9 +322,9 @@ google-cloud-storage
 Los notebooks deben ejecutarse en orden secuencial:
 
 ```
-00_pipeline_fuentes_gcp_final2605.ipynb
+00_pipeline_fuentes.ipynb
         ↓ genera master_v5_final.parquet
-01_eda_calidad_fiabilidad_final2605.ipynb
+01_eda_calidad_fiabilidad.ipynb
         ↓ genera imputer.pkl, scaler.pkl, label_encoders.pkl, feature_meta.json
 02_modelado_cientifico.ipynb
         ↓ genera model_results_test_official.csv, test_predictions_official.npz
@@ -336,7 +336,7 @@ Si ya se dispone del parquet procesado y los artefactos de preprocesamiento, pue
 
 ## Datos
 
-Los datos de Equijar no se incluyen en este repositorio por razones de licencia. El dataset final procesado (`master_v5_final.parquet`) está disponible en el bucket de Google Cloud Storage del proyecto: `gs://bucephalus-bucket1/datasets_raw`.
+Los datos de la Real Sociedad Hípica Española no se incluyen en este repositorio por razones de licencia.
 
 Para reproducir el pipeline desde los CSVs raw es necesario disponer de acceso al proyecto GCP `project-bucephalus` o contar con los ficheros fuente en el directorio `data/raw/`.
 
@@ -344,4 +344,4 @@ Para reproducir el pipeline desde los CSVs raw es necesario disponer de acceso a
 
 ## Referencia
 
-Este repositorio acompaña al TFM *"Bucephalus: Predicción de Resultados en Carreras de Caballos mediante Técnicas de Ranking Tabular"*, presentado en el Máster en Ingeniería de Inteligencia Artificial de la Universidad Internacional de La Rioja (UNIR), 2025.
+Este repositorio acompaña al TFM *"Predicción de Resultados en Carreras de Caballos mediante Técnicas de Ranking Tabular"*, presentado en el Máster en Ingeniería de Inteligencia Artificial de la Universidad Internacional de La Rioja (UNIR), 2025-2026.
