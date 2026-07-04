@@ -17,7 +17,7 @@ El proyecto compara técnicas clásicas de *boosting* (XGBoost, LightGBM, CatBoo
 ## Estructura del Repositorio
 
 ```
-bucephalus/
+UNIR_TFM/
 │
 ├── notebooks/
 │   ├── 00_pipeline_fuentes.ipynb                  # Pipeline de datos y feature store
@@ -35,14 +35,7 @@ bucephalus/
 │   └── processed/
 │       └── master_v5_final.parquet                # Dataset final (no incluido)
 │
-├── models/                                        # Artefactos de preprocesamiento y modelos
-│   ├── imputer.pkl
-│   ├── scaler.pkl
-│   ├── label_encoders.pkl
-│   └── feature_meta.json
-│
-└── reports/                                       # Resultados y métricas exportadas
-    └── model_results_test_official.csv
+└── Readme.md                                      # Readme
 ```
 
 ---
